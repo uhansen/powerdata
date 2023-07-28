@@ -1,8 +1,8 @@
 spin_manifest_version = "1"
-authors = ["uhansen"]
-description = "receives data from eloverblik.dk"
+authors = ["Uffe Hansen <uffe.hansen@gmail.com>"]
+description = "Handle powerdata"
 name = "powerdata"
-trigger = { type = "http", base = "/adddata" }
+trigger = { type = "http", base = "/api" }
 version = "0.1.0"
 
 [[component]]
@@ -10,7 +10,18 @@ id = "powerdata"
 source = "target/wasm32-wasi/release/powerdata.wasm"
 allowed_http_hosts = []
 [component.trigger]
-route = "/..."
+route = "/post"
 [component.build]
 command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
+
+[[component]]
+id = "getpowerdatabydate"
+source = "getpowerdatabydate/target/wasm32-wasi/release/getpowerdatabydate.wasm"
+allowed_http_hosts = []
+[component.trigger]
+route = "/get"
+[component.build]
+command = "cargo build --target wasm32-wasi --release"
+workdir = "getpowerdatabydate"
 watch = ["src/**/*.rs", "Cargo.toml"]

@@ -1,7 +1,7 @@
 [package]
-name = "powerdata"
+name = "getpowerdatabydate"
 authors = ["Uffe Hansen <uffe.hansen@gmail.com>"]
-description = "Handle powerdata"
+description = "returns powerdata by date"
 version = "0.1.0"
 edition = "2021"
 
