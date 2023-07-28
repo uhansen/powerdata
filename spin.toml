@@ -1,0 +1,16 @@
+spin_manifest_version = "1"
+authors = ["uhansen"]
+description = "receives data from eloverblik.dk"
+name = "powerdata"
+trigger = { type = "http", base = "/adddata" }
+version = "0.1.0"
+
+[[component]]
+id = "powerdata"
+source = "target/wasm32-wasi/release/powerdata.wasm"
+allowed_http_hosts = []
+[component.trigger]
+route = "/..."
+[component.build]
+command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
