@@ -1,8 +1,8 @@
 spin_manifest_version = "1"
 authors = ["Uffe Hansen <uffe.hansen@gmail.com>"]
-description = "Handle powerdata"
+description = ""
 name = "powerdata"
-trigger = { type = "http", base = "/api" }
+trigger = { type = "http", base = "/" }
 version = "0.1.0"
 
 [[component]]
@@ -10,18 +10,7 @@ id = "powerdata"
 source = "target/wasm32-wasi/release/powerdata.wasm"
 allowed_http_hosts = []
 [component.trigger]
-route = "/post"
+route = "/..."
 [component.build]
 command = "cargo build --target wasm32-wasi --release"
-watch = ["src/**/*.rs", "Cargo.toml"]
-
-[[component]]
-id = "getpowerdatabydate"
-source = "getpowerdatabydate/target/wasm32-wasi/release/getpowerdatabydate.wasm"
-allowed_http_hosts = []
-[component.trigger]
-route = "/get"
-[component.build]
-command = "cargo build --target wasm32-wasi --release"
-workdir = "getpowerdatabydate"
 watch = ["src/**/*.rs", "Cargo.toml"]
