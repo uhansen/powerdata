@@ -6,11 +6,23 @@ trigger = { type = "http", base = "/" }
 version = "0.1.0"
 
 [[component]]
-id = "powerdata"
-source = "target/wasm32-wasi/release/powerdata.wasm"
+id = "add-powerdata"
+source = "add-powerdata/target/wasm32-wasi/release/add_powerdata.wasm"
 allowed_http_hosts = []
 [component.trigger]
-route = "/..."
+route = "/add"
 [component.build]
 command = "cargo build --target wasm32-wasi --release"
+workdir = "add-powerdata"
+watch = ["src/**/*.rs", "Cargo.toml"]
+
+[[component]]
+id = "list-powerdata"
+source = "list-powerdata/target/wasm32-wasi/release/list_powerdata.wasm"
+allowed_http_hosts = []
+[component.trigger]
+route = "/list"
+[component.build]
+command = "cargo build --target wasm32-wasi --release"
+workdir = "list-powerdata"
 watch = ["src/**/*.rs", "Cargo.toml"]
