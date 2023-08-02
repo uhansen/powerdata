@@ -18,6 +18,6 @@ pub(crate) struct POIData {
 #[derive(Serialize, Deserialize, Debug)]
 pub(crate) struct PowerData {
     pub id: Option<String>,
-    pub timestamp: Option<Date>,
+    pub timestamp: Option<String>,
     pub power: Option<f64>,
 } 
