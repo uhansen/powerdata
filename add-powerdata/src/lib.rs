@@ -1,9 +1,26 @@
+mod model;
+mod utils;
+
 use anyhow::Result;
+use bytes::Bytes;
 use spin_sdk::{
     http::{Request, Response},
     http_component,
 };
 
+use model::POIData;
+
+use utils::{bad_request,internal_server_error,method_not_allowed,not_found, ok, no_content};
+
+enum Api {
+    Create(model::POIData),
+    ReadByHandle(String),
+    Update(model::POIData),
+    Delete(model::POIData),
+    BadRequest,
+    NotFound,
+    MethodNotAllowed,
+}
 /// A simple Spin HTTP component.
 #[http_component]
 fn handle_add_powerdata(req: Request) -> Result<Response> {
