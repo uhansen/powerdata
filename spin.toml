@@ -1,28 +1,18 @@
 spin_manifest_version = "1"
 authors = ["Uffe Hansen <uffe.hansen@gmail.com>"]
-description = ""
+description = "Powerdata handler"
 name = "powerdata"
-trigger = { type = "http", base = "/" }
+trigger = { type = "http", base = "/powerdata" }
 version = "0.1.0"
 
 [[component]]
-id = "add-powerdata"
-source = "add-powerdata/target/wasm32-wasi/release/add_powerdata.wasm"
+id = "customer-powerdata"
+sqlite_databases = ["default"]
+source = "customer-powerdata/target/wasm32-wasi/release/customer_powerdata.wasm"
 allowed_http_hosts = []
 [component.trigger]
-route = "/add"
+route = "/customer"
 [component.build]
 command = "cargo build --target wasm32-wasi --release"
-workdir = "add-powerdata"
-watch = ["src/**/*.rs", "Cargo.toml"]
-
-[[component]]
-id = "list-powerdata"
-source = "list-powerdata/target/wasm32-wasi/release/list_powerdata.wasm"
-allowed_http_hosts = []
-[component.trigger]
-route = "/list"
-[component.build]
-command = "cargo build --target wasm32-wasi --release"
-workdir = "list-powerdata"
+workdir = "customer-powerdata"
 watch = ["src/**/*.rs", "Cargo.toml"]
