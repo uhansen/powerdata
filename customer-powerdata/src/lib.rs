@@ -1,8 +1,11 @@
 use anyhow::Result;
+use serde::Serialize;
 use spin_sdk::{
     http::{Request, Response},
     http_component,
+    sqlite::{Connection, Error, ValueParam},
 };
+
 
 /// A simple Spin HTTP component.
 #[http_component]
