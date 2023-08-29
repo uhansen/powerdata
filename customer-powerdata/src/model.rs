@@ -79,4 +79,22 @@ impl CustomerData {
         sqlite::execute("INSERT INTO Customer (id, first_name, last_name, email, key, street, city, zip, country, longitude, latitude, meterno) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", &params)?;
         Ok(())
     }
+    
+    pub(crate) fn delete(&self, db_url: &str) -> Result<()> {
+        match &self.id {
+            Some(id) => {
+                let params = vec![
+                    ParameterValue::Str(id.as_str())
+                ];
+                sqlite::execute("DELETE FROM Customer WHERE id=?", &params)?
+            },
+            None => {
+                let params = vec![
+                    ParameterValue::Str(self.meter_number.as_str())
+                ];
+                sqlite::execute("DELETE FROM Customer WHERE meterno=?", &params)?
+            }
+        }
+        Ok(())
+    }
 }
