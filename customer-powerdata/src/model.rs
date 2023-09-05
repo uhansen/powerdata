@@ -3,6 +3,7 @@ use bytes::Bytes;
 use http::HeaderMap;
 use serde::{Deserialize, Serialize};
 use crate::utils::get_last_param_from_route;
+use spin_sdk::sqlite::{Connection, ParameterValue};
 
 fn as_param<'a>(value: &'a Option<String>) -> Option<ParameterValue<'a>> {
     match value {
@@ -76,17 +77,23 @@ impl CustomerData {
             ParameterValue::Float(self.address.latitude),
             as_param(&self.meter_number).ok_or(anyhow!("The meter_number field is currently required for insert"))?,
         ];
-        sqlite::execute("INSERT INTO Customer (id, first_name, last_name, email, key, street, city, zip, country, longitude, latitude, meterno) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", &params)?;
+        let sqlite = Connection::open_default()?;
+        sqlite.execute(
+            "INSERT INTO Customer (id, first_name, last_name, email, eloverblik_key, street, city, zip, country, longitude, latitude, meterno) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            params,
+        )?;
+
         Ok(())
     }
-    
-    pub(crate) fn delete(&self, db_url: &str) -> Result<()> {
+
+    pub(crate) fn delete(&self) -> Result<()> {
+        let sqlite = Connection::open_default()?;
         match &self.id {
             Some(id) => {
                 let params = vec![
                     ParameterValue::Str(id.as_str())
                 ];
-                sqlite::execute("DELETE FROM Customer WHERE id=?", &params)?
+            sqlite.execute("DELETE FROM Customer WHERE id=?", &params)?
             },
             None => {
                 let params = vec![
