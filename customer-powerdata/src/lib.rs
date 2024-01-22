@@ -1,7 +1,7 @@
 use anyhow::Result;
 //use serde::Serialize;
 use spin_sdk::{
-    http::{Request, Response, Router},
+    http::{Request, Response /*,Router*/},
     http_component,
 };
 
@@ -9,7 +9,7 @@ use spin_sdk::{
 /// A simple Spin HTTP component.
 #[http_component]
 fn handle_customer_powerdata(req: Request) -> Result<Response> {
-    let mut router = Router::default();
+    //let router= Router::default();
     /*router.get("/", handle_get_all);
     router.get("/:id", handle_get_by_id);
     router.post("/", handle_create);
@@ -26,3 +26,5 @@ fn handle_customer_powerdata(req: Request) -> Result<Response> {
         .body(Some("Hello, Fermyon".into()))?)
         
 }
+
+//https://www.thorsten-hans.com/first-glance-at-spin-router-for-rust/#find-the-sample-repository-on-github
